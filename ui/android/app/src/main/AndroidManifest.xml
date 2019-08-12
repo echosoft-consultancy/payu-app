@@ -14,7 +14,7 @@
         android:label="payu"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBzA_3gWvjTI7iuPunRjVsKUbS1JgE09VM"/>
+            android:value="ENTER_MAPS_API_KEY"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
