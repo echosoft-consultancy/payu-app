@@ -74,7 +74,7 @@ class MapSampleState extends State<MapSample> {
 
 
   void _add() async{
-    Map<String, dynamic> people = await fetchPerson();
+    List<Person> people = await fetchPerson();
     final MarkerId markerId = MarkerId("1");
     Position location = await currentLocation();
 
@@ -135,16 +135,14 @@ class MapSampleState extends State<MapSample> {
     print('lul');
   }
 
-  Future<Map<String, dynamic>> fetchPerson() async {
-    final response = await http.get("http://192.168.86.248:5000/users");
+  Future<List<Person>> fetchPerson() async {
+    final response = await http.get("http://192.168.86.22:5000/users");
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON.
 
-      dynamic jsonDecoded = json.decode(response.body);
-      Map<String, Person> people = Map();
-      jsonDecoded.forEach((k, v) => people[k] = Person.fromJson(v));
-      return jsonDecoded;
+      Iterable jsonDecoded = json.decode(response.body);
+      return jsonDecoded.map((model) => Person.fromJson(model)).toList();
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
@@ -153,7 +151,7 @@ class MapSampleState extends State<MapSample> {
 
   void sendLocation(String name) async {
     // set up POST request arguments
-    String url = 'http://192.168.86.248:5000/users';
+    String url = 'http://192.168.86.22:5000/users';
     Position position = await currentLocation();
     Map<String, String> headers = {"Content-type": "application/json"};
     Person person = Person.fromDefault(position.latitude, position.longitude, "bruh", name);
